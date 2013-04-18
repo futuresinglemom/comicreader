@@ -1,0 +1,101 @@
+<style>
+.comicreader {
+	position: absolute;
+	z-index: 100000;
+	width: 100%;
+	top: 0px;
+	left: 0px;
+}
+.comicimg {
+	width: 100%;
+}
+
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js" type="text/javascript"></script>
+<script>
+var init_comic_reader = function() {
+        var comicreaderdiv=document.createElement("div");
+        comicreaderdiv.setAttribute("class", "comicreader");
+        comicimgelement=document.createElement("img");
+        comicimgelement.setAttribute("class", "comicimg");
+
+        $("body")[0].appendChild(comicreaderdiv);
+        $(".comicreader")[0].appendChild(comicimgelement);
+
+	var current_comic = {};
+
+	var comicreader = $(".comicreader");
+	var comicimg = $(".comicreader").children(".comicimg");
+
+	$(document).keydown( function(event) {
+		if (event.keyCode == 39) {
+			current_comic.forward();
+		} else if (event.keyCode == 37) {
+			current_comic.backward();
+		} else if (event.keyCode == 27) {
+			current_comic.hide();
+		}
+	});
+	
+	comicimg.click( function(event) {
+		current_comic.forward();
+	});
+	
+	var init_comic = function (comic, imgarray) {
+		$(comic).html('<button>'+(comic.getAttribute('name') || 'read comic') +'</button>');
+		
+		$(comic).children("button").click( function(event) {
+			
+$(document).scrollTop(0);_self = {imgarray: imgarray, index: 0, 
+				update: function() {
+					$(".comicimg").attr("src", _self.imgarray[_self.index]);
+				},
+				
+				forward: function() {
+					_self.index++;
+					if (_self.index < _self.imgarray.length) {
+						_self.update();
+					} else {
+						$(".comicreader").hide();
+					}
+$(document).scrollTop(0);
+				},
+				
+				backward: function() {
+					_self.index--;
+					if (_self.index >= 0) {
+						_self.update();
+					} else {
+						$(".comicreader").hide();
+					}
+				},
+				
+				hide: function() {
+					$(".comicreader").hide();
+				}
+			};
+			current_comic = _self;
+			comicreader.children("img").attr("src",current_comic.imgarray[current_comic.index]);
+			comicreader.show();
+		});
+	};
+
+	$(".comic").each( function(index,comic) {
+		var imgarray = new Array();
+		$(comic).find("img").each( function(imgindex, imgobj) {
+			imgarray.push(imgobj.src);
+		});
+		init_comic(comic,imgarray);
+	});
+
+	$(".comic-a").each( function(index,comic) {
+		var imgarray = new Array();
+		$(comic).find("a").each( function(imgindex, imgobj) {
+			imgarray.push(imgobj.href);
+		});
+		init_comic(comic,imgarray);
+	});
+
+};
+init_comic_reader();
+</script>
