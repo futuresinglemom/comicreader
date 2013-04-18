@@ -4,6 +4,7 @@ comicreader
 Uso:
 
 Para mostrar una serie de imagenes como comic, hay que encerrar las imagenes en un div cuya clase sea "comic" 
+`
 <div class="comic">
   <img src=01.jpg></img>
   <img src=02.jpg></img>
@@ -11,10 +12,12 @@ Para mostrar una serie de imagenes como comic, hay que encerrar las imagenes en 
   ...
   <img src=0n.jpg></img>
 </div>
+`
 
 Cuando se carga el js, el contenido de ese div es reemplazado por un boton que al hacerle click comienza a mostrar
 las imagenes en tamanio grande, ocupando todo el area de la pagina, el texto que muestra el boton sera "Read comic",
 para cambiarlo hay que usar la propiedad name del div, asi:
+`
 <div class="comic" name="Leer comic">
   <img src=01.jpg></img>
   <img src=02.jpg></img>
@@ -22,8 +25,10 @@ para cambiarlo hay que usar la propiedad name del div, asi:
   ...
   <img src=0n.jpg></img>
 </div>
+`
 
 Si las imagenes que queremos mostrar, estan en enlaces, entonces se usa la clase "comic-a", asi:
+`
 <div class="comic-a">
   <a href=01.jpg></a>
   <a href=02.jpg></a>
@@ -31,7 +36,7 @@ Si las imagenes que queremos mostrar, estan en enlaces, entonces se usa la clase
   ...
   <a href=0n.jpg></a>
 </div>
-
+`
 
 Blogspot
 ========
