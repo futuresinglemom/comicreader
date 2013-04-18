@@ -1,0 +1,4 @@
+comicreader
+===========
+
+Comic reader JS
