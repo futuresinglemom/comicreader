@@ -48,7 +48,11 @@ var init_comic_reader = function() {
 			
 $(document).scrollTop(0);_self = {imgarray: imgarray, index: 0, 
 				update: function() {
-					$(".comicimg").attr("src", _self.imgarray[_self.index]);
+					$(comicimg).attr("src", _self.imgarray[_self.index]);
+					if (_self.index + 1 < _self.imgarray.length) {
+						var image = new Image(); // preload next image
+						image.src = _self.imgarray[_self.index+1];
+					}
 				},
 				
 				forward: function() {
@@ -56,7 +60,7 @@ $(document).scrollTop(0);_self = {imgarray: imgarray, index: 0,
 					if (_self.index < _self.imgarray.length) {
 						_self.update();
 					} else {
-						$(".comicreader").hide();
+						$(comicreader).hide();
 					}
 $(document).scrollTop(0);
 				},
@@ -66,16 +70,19 @@ $(document).scrollTop(0);
 					if (_self.index >= 0) {
 						_self.update();
 					} else {
-						$(".comicreader").hide();
+						$(comicreader).hide();
 					}
 				},
 				
 				hide: function() {
-					$(".comicreader").hide();
+					$(comicreader).hide();
 				}
 			};
+			$(comicimg).attr('class', comic.getAttribute("data-comicimg-class"));
+            $(comicreader).attr('class', comic.getAttribute("data-comicreader-class"));
+			
 			current_comic = _self;
-			comicreader.children("img").attr("src",current_comic.imgarray[current_comic.index]);
+			current_comic.update();
 			comicreader.show();
 		});
 	};
