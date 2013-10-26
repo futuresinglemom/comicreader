@@ -48,7 +48,6 @@ var init_comic_reader = function() {
 	var comicimg = $(".comicreader").children(".comicimg");
 
 	$(document).keydown( function(event) {
-	console.log(event);
 		if (event.keyCode == 39) {
 			current_comic.forward();
 		} else if (event.keyCode == 37) {
@@ -77,7 +76,6 @@ $(document).scrollTop(0);_self = {imgarray: imgarray, index: 0,
 				},
 				
 				forward: function() {
-console.log(comic.getAttribute("data-comicreader-class"));
 					_self.index++;
 					if (_self.index < _self.imgarray.length) {
 						_self.update();
