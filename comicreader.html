@@ -1,15 +1,20 @@
 <style>
-.comicreader {
+div.comicreader {
 	position: absolute;
 	z-index: 100000;
 	width: 100%;
 	top: 0px;
 	left: 0px;
 }
-.comicimg {
+img.comicimg {
 	width: 100%;
 }
-.vertical-comicreader {
+
+body.vertical-comicreader {
+  overflow: hidden;
+}
+
+div.vertical-comicreader {
 	position: absolute;
 	z-index: 100000;
 	width: 100%;
@@ -18,17 +23,21 @@
 	left: 0px;
 	background-color: #000;
 }
-.vertical-comicimg {
+img.vertical-comicimg {
 	height: 100%;
 }
+
 </style>
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js" type="text/javascript"></script>
 <script>
 var init_comic_reader = function() {
+
         var comicreaderdiv=document.createElement("div");
         comicreaderdiv.setAttribute("class", "comicreader");
         comicimgelement=document.createElement("img");
         comicimgelement.setAttribute("class", "comicimg");
+        $(window).resize(function() { $(".vertical-comicreader").css("height",""+window.innerHeight+"px"); });
 
         $("body")[0].appendChild(comicreaderdiv);
         $(".comicreader")[0].appendChild(comicimgelement);
@@ -39,6 +48,7 @@ var init_comic_reader = function() {
 	var comicimg = $(".comicreader").children(".comicimg");
 
 	$(document).keydown( function(event) {
+	console.log(event);
 		if (event.keyCode == 39) {
 			current_comic.forward();
 		} else if (event.keyCode == 37) {
@@ -67,6 +77,7 @@ $(document).scrollTop(0);_self = {imgarray: imgarray, index: 0,
 				},
 				
 				forward: function() {
+console.log(comic.getAttribute("data-comicreader-class"));
 					_self.index++;
 					if (_self.index < _self.imgarray.length) {
 						_self.update();
@@ -86,12 +97,18 @@ $(document).scrollTop(0);
 				},
 				
 				hide: function() {
+                                        $("body").removeClass(comic.getAttribute("data-comicreader-class") || "comicreader");
 					$(comicreader).hide();
 				}
 			};
-			$(comicimg).attr('class', comic.getAttribute("data-comicimg-class"));
-            $(comicreader).attr('class', comic.getAttribute("data-comicreader-class"));
+                        if (comic.getAttribute("data-comicimg-class"))
+   				$(comicimg).attr('class', comic.getAttribute("data-comicimg-class"));
+                        if (comic.getAttribute("data-comicreader-class"))
+		            $(comicreader).attr('class', comic.getAttribute("data-comicreader-class"));
+                        $("body").addClass(comic.getAttribute("data-comicreader-class") || "comicreader");
 			
+                        $(".vertical-comicreader").css("height",""+window.innerHeight+"px");
+
 			current_comic = _self;
 			current_comic.update();
 			comicreader.show();
@@ -115,5 +132,5 @@ $(document).scrollTop(0);
 	});
 
 };
-init_comic_reader();
+$(document).ready(init_comic_reader);
 </script>
